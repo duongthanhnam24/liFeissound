@@ -144,10 +144,9 @@ const app  = {
 
         // xử lí khi click play chạy nhạc
             btnPlay.onclick = function() {
+                // logic
                 if(app.isPlaying) {
-                    app.isPlaying = false
                     audio.pause()
-                    iconPlay.classList.remove('fa-pause')
                 } else {
                     audio.play()
                 }            
