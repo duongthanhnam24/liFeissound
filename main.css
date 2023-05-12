@@ -13,10 +13,16 @@ html{
   font-family: "Poppins", sans-serif;
 }
 
+.dp{
+  display: none;
+}
 .text-align{
   text-align: center;
 }
 
+.fas.fa-solid.fa-circle-play{
+  
+}
 
 .flex {
   display: flex;

@@ -14,16 +14,19 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
+const cd = $('.cd-music')
 const playlist = $('.play-list')
-
-
-
+const heading2 = $('h2')
+const cdThumb = $('.cd-pic')
+const audio = $('#audio')
+const btnPlay = $('.btn-play')
+const iconPlay = $('.fas')
 
 
 
 const app  = {
     currentIndex : 0,
-    
+    isPlaying: false,
    songs: [
         {
             name : 'ONLY',
@@ -125,29 +128,70 @@ const app  = {
     },
 
     defineProperties: function() {
-        Object.definePropertie(this, 'currentSong', {
+        Object.defineProperty(this, 'currentSong', {
             get: function() {
-                console.log(123)
+                return this.songs[this.currentIndex]
             }
         }) 
     },
 
     handleEvents: function() {
-        const cd = $('.cd-music')
+       // xử lí cuộn kéo
         const cdWidth = cd.offsetWidth
-        
             document.onscroll = function() {
                 console.log(123)
             }
+
+        // xử lí khi click play chạy nhạc
+            btnPlay.onclick = function() {
+                if(app.isPlaying) {
+                    app.isPlaying = false
+                    audio.pause()
+                    iconPlay.classList.remove('fa-pause')
+                } else {
+                    audio.play()
+                }            
+            }
+
+              // khi nhạc phát thực hiện chức năng thay đổi nút thành play
+              audio.onplay = function() {
+                app.isPlaying = true
+                iconPlay.classList.remove('fa-circle-play')
+                iconPlay.classList.add('fa-pause')
+            }
+                // khi pause
+            audio.onpause = function() {
+                app.isPlaying = false
+                iconPlay.classList.remove('fa-pause')
+                iconPlay.classList.add('fa-circle-play')
+
+            }
+       
+    },
+
+    loadCurrentSong: function() {
+    
+
+       heading2.textContent = this.currentSong.name
+       cdThumb.style.backgroundImage = `url(${this.currentSong.image})`
+      audio.src = this.currentSong.path
     },
 
     start: function() {
         this.changebg()
-        this.handleEvents
         
+        // định nghĩa các thuộc tính cho obj
+        this.defineProperties()
         
-        
+        // lắng nghe xử lý các sự kiện(dom events)
+        this.handleEvents()
+
+        // tải thông tin bài hát đầu tiên vào UI 
+        this.loadCurrentSong()
+        // đổ dữ liệu
         this.render()
+
+
     },
 
     
