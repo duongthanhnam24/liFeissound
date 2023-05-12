@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music player</title>
+    <link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="stylesheet" href="./main.css">
+    
+</head>
+<body>
+    <div id="container" class="container flex bgsun" >
+        <div class="favorite-music">
+            <h1>Favorite music</h1>
+            <div class="btn-change">
+                <button class="btn-sun">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+                <button class="btn-moon">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-music flex">
+            <div class="dashboard background">
+                <!-- tình trạng pháy -->
+                <div class="status-music flex">
+                    <div class="headphone">
+                        <i class="fa-solid fa-headphones"></i>
+                    </div>
+
+                    <div class="text-status text-align">
+                        <h4>Now playing:</h4>
+                        <h2>String 57th & 9th</h2>
+                    </div>
+
+                    <div class="heart">
+                        <i class="fa-solid fa-heart" style="font-weight: normal;"></i>
+                    </div>
+                </div>
+                <!-- cd -->
+                <div class="cd-music">
+                    <div class="cd-pic" style="background-image: url(./img/picture-song/maxresdefault.jpg);"></div>
+                </div>
+                    <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+
+                    <audio id="audio" src=""></audio>
+                <!-- control -->
+                <div class="control">
+                    <div class="btn btn-repeat">
+                        <i class="fa-solid fa-repeat"></i>
+                    </div>
+
+                    <div class="btn btn-back">
+                        <i class="fa-sharp fa-solid fa-backward-step"></i>
+                    </div>
+
+                    <div class="btn btn-play">
+                        <i class="fa-solid fa-circle-play"></i>
+                    </div>
+
+                    <div class="btn btn-next">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </div>
+
+                    <div class="btn btn-random">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="play-list">
+                
+
+            </div>
+        </div>
+
+
+    </div>
+
+    
+    
+
+    <script src="./main.js">
+
+        
+    </script>
+</body>
+</html>
