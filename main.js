@@ -22,8 +22,7 @@ const audio = $('#audio')
 const btnPlay = $('.btn-play')
 const iconPlay = $('.fas')
 const progress = $('#progress')
-const timeSong = audio.duration * 1000
-console.log(timeSong)
+const timeSong = audio.duration * 1000;
 
 
 
@@ -150,7 +149,7 @@ const app  = {
                 const cdAnimation = cdThumb.animate([
                     {transform : 'rotate(360deg)'}
                 ] , {
-                    duration :10000 ,
+                    duration : 10000,
                     interation: Infinity
                     })
                     cdAnimation.pause()
