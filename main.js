@@ -21,6 +21,9 @@ const cdThumb = $('.cd-pic')
 const audio = $('#audio')
 const btnPlay = $('.btn-play')
 const iconPlay = $('.fas')
+const progress = $('#progress')
+const timeSong = audio.duration * 1000
+console.log(timeSong)
 
 
 
@@ -142,6 +145,16 @@ const app  = {
                 console.log(123)
             }
 
+
+            // cd quay 
+                const cdAnimation = cdThumb.animate([
+                    {transform : 'rotate(360deg)'}
+                ] , {
+                    duration :10000 ,
+                    interation: Infinity
+                    })
+                    cdAnimation.pause()
+
         // xử lí khi click play chạy nhạc
             btnPlay.onclick = function() {
                 // logic
@@ -157,14 +170,37 @@ const app  = {
                 app.isPlaying = true
                 iconPlay.classList.remove('fa-circle-play')
                 iconPlay.classList.add('fa-pause')
+                cdAnimation.play()
             }
                 // khi pause
             audio.onpause = function() {
                 app.isPlaying = false
                 iconPlay.classList.remove('fa-pause')
                 iconPlay.classList.add('fa-circle-play')
+                cdAnimation.pause()
 
             }
+
+            // khi bài hát đang chạy 
+            audio.ontimeupdate = function() {
+                
+               if(audio.duration) {
+                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
+                
+                progress.value = progressPercent
+               }
+            }
+
+            // khi tua bài hát
+            progress.onchange = function(e) {
+                    const seekTime = audio.duration / 100 * e.target.value
+                    audio.currentTime = seekTime
+            }
+
+            
+            
+            
+            
        
     },
 
@@ -189,6 +225,8 @@ const app  = {
         this.loadCurrentSong()
         // đổ dữ liệu
         this.render()
+       
+
 
 
     },
