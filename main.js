@@ -22,8 +22,9 @@ const audio = $('#audio')
 const btnPlay = $('.btn-play')
 const iconPlay = $('.fas')
 const progress = $('#progress')
-const timeSong = audio.duration * 1000;
 
+const nextBtn = $('.btn-next')
+const backBtn = $('.btn-back')
 
 
 const app  = {
@@ -62,29 +63,29 @@ const app  = {
         {
             name : 'Em không đi đâu',
             singer: 'QNT',
-            path: './music/Em Không Đi Đâu.mp3',
+            path: './music/y2meta.com - QNT - EM KHÔNG ĐI ĐÂU ft. Gii (MV LYRICS) (320 kbps).mp3',
             image: './img/picture-song/QNT.jpg',
     
         },
         {
-            name : 'a',
-            singer: 'QNT',
-            path: './music/Em Không Đi Đâu.mp3',
-            image: './img/picture-song/QNT.jpg',
+            name : 'Hello',
+            singer: 'Adele',
+            path: './music/Hello.mp3',
+            image: './img/picture-song/helo.jpg',
     
         },
         {
-            name : 'b',
-            singer: 'QNT',
-            path: './music/Em Không Đi Đâu.mp3',
-            image: './img/picture-song/QNT.jpg',
+            name : 'Cupid',
+            singer: 'FIFTY FIFTY',
+            path: './music/Cupid.mp3',
+            image: './img/picture-song/cupid.jpg',
     
         },
         {
-            name : 'c',
-            singer: 'QNT',
-            path: './music/Em Không Đi Đâu.mp3',
-            image: './img/picture-song/QNT.jpg',
+            name : 'Người Đáng Thương Là Anh',
+            singer: 'OnlyC',
+            path: './music/NGƯỜI ĐÁNG THƯƠNG LÀ ANH.mp3',
+            image: './img/picture-song/OnlyC.jpg',
     
         },
     ],
@@ -149,18 +150,20 @@ const app  = {
                 const cdAnimation = cdThumb.animate([
                     {transform : 'rotate(360deg)'}
                 ] , {
-                    duration : 10000,
-                    interation: Infinity
+                    duration : 10000 ,
+                    iterations: Infinity
                     })
                     cdAnimation.pause()
-
+                    
         // xử lí khi click play chạy nhạc
             btnPlay.onclick = function() {
                 // logic
                 if(app.isPlaying) {
                     audio.pause()
+                
                 } else {
                     audio.play()
+                   
                 }            
             }
 
@@ -170,6 +173,7 @@ const app  = {
                 iconPlay.classList.remove('fa-circle-play')
                 iconPlay.classList.add('fa-pause')
                 cdAnimation.play()
+                
             }
                 // khi pause
             audio.onpause = function() {
@@ -182,21 +186,36 @@ const app  = {
 
             // khi bài hát đang chạy 
             audio.ontimeupdate = function() {
-                
                if(audio.duration) {
+                const durations = audio.duration
                 const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
-                
                 progress.value = progressPercent
+                return durations
                }
+            }
+
+            audio.onended = function() {
+                app.nextSong()
+                audio.play()
             }
 
             // khi tua bài hát
             progress.onchange = function(e) {
-                    const seekTime = audio.duration / 100 * e.target.value
-                    audio.currentTime = seekTime
+                const seekTime = audio.duration / 100 * e.target.value
+                audio.currentTime = seekTime
+                console.log(seekTime)
+                
             }
 
-            
+            nextBtn.onclick = function() {
+                app.nextSong()
+                audio.play()
+            }
+
+            backBtn.onclick = function() {
+                app.backSong()
+                audio.play()
+            }
             
             
             
@@ -211,6 +230,24 @@ const app  = {
       audio.src = this.currentSong.path
     },
 
+    nextSong : function() {
+        this.currentIndex++
+        console.log(this.currentIndex, this.songs.length)
+        if(this.currentIndex >= this.songs.length) {
+             this.currentIndex = 0;
+        }
+
+        this.loadCurrentSong()
+    },
+
+    backSong : function() {
+        this.currentIndex--
+        if(this.currentIndex < 0) {
+            this.currentIndex = this.songs.length -1;   
+        }
+        this.loadCurrentSong()
+    },
+
     start: function() {
         this.changebg()
         
@@ -222,6 +259,9 @@ const app  = {
 
         // tải thông tin bài hát đầu tiên vào UI 
         this.loadCurrentSong()
+
+        
+
         // đổ dữ liệu
         this.render()
        
