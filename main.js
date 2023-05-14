@@ -14,6 +14,11 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
+const PLAYER_STORAGE_KEY = "NAM-PLAYER"
+
+
+const dashboard = $('.dashboard')
+
 const cd = $('.cd-music')
 const playlist = $('.play-list')
 const heading2 = $('h2')
@@ -30,6 +35,7 @@ const btnRepeat = $('.btn-repeat')
 
 const btnVolum = $('.fa-volum')
 const volumProgress = $('.volum-progress')
+const headphone = $('.headphone')
 
 
 
@@ -39,6 +45,11 @@ const app  = {
     isRandom: false,// có cũng được ko cũng được
     isRepeat: false,
     isVolum:false,
+    config : JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
+    setConfig: function(key, value) {
+            this.config[key] = value
+            localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
+    },
    songs: [
         {
             name : 'ONLY',
@@ -236,6 +247,7 @@ const app  = {
                 }
                 audio.play()
                 app.render()
+                app.scrolltoActive()
             }
 
             
@@ -252,6 +264,7 @@ const app  = {
                 app.render()
             }
 
+
             // xử lý bật tắt random
             btnRandom.onclick = function() {
                 // if(app.isRandom == true){
@@ -263,6 +276,8 @@ const app  = {
                 // }
 
                 app.isRandom = !app.isRandom
+                app.setConfig('isRandom', app.isRandom)
+                
                 this.classList.toggle('active', app.isRandom) //phương thức sẽ xóa `active`trả về giá trị `false`. Nếu chưa có sẽ thêm `active` trả về giá trị `true`.
            
             }
@@ -270,6 +285,8 @@ const app  = {
             // bắt tắt lặp bài hát
             btnRepeat.onclick = function() {
                 app.isRepeat = !app.isRepeat
+                app.setConfig('isRepeat', app.isRepeat)
+
                 this.classList.toggle('active', app.isRepeat) 
                 
 
@@ -286,6 +303,7 @@ const app  = {
                         app.loadCurrentSong()
                         app.render()
                         audio.play()
+                        app.scrolltoActive()
                     }
 
                     
@@ -296,14 +314,32 @@ const app  = {
             volumProgress.onchange = function(e) {
               const audioVol =  e.target.value
               audio.volume = audioVol / 100
-              
+             
 
             }
 
             // bật tắt volum 
             btnVolum.onclick = function() {
-                app.isVolum = !app.isVolum
-                this.classList.toggle('fa-volume-xmark', app.isVolum)
+                // app.isVolum = !app.isVolum
+                // this.classList.toggle('fa-volume-xmark', app.isVolum)
+                if (app.isVolum) {
+                    this.classList.remove('fa-volume-xmark')
+                    app.isVolum = false
+                    audio.volume = 1;
+              } else {
+                    this.classList.add('fa-volume-xmark')
+                    app.isVolum = true
+                    audio.volume = 0;
+                    audioVol = 0;
+
+              }
+            }
+
+
+            headphone.onclick = function() {
+                playlist.style.display = 'block'
+                dashboard.style.display = 'none'
+
             }
     },
     // load ra bài hát 
@@ -352,9 +388,23 @@ const app  = {
                 })
             } , 300)
     },
+
+    // đổ dữ liệu trong strorage ra màn hình
+    returnConfig: function() {
+            this.isRandom = this.config.isRandom
+            this.isRepeat = this.config.isRepeat
+
+            btnRepeat.classList.toggle('active', app.isRepeat)
+            btnRandom.classList.toggle('active', app.isRandom) 
+           
+
+
+    },
    
 
     start: function() {
+        this.returnConfig()
+
         this.changebg()
         
         // định nghĩa các thuộc tính cho obj

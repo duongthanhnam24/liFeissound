@@ -9,6 +9,10 @@
     box-sizing: border-box;
 }
 
+.displaynone{
+  display: none;
+}
+
 html{
   font-family: "Poppins", sans-serif;
 }
@@ -121,7 +125,7 @@ h1{
 h2{
   font-family: "Lobster Two", cursive;
   white-space: nowrap; /* Ngăn chặn đẩy xuống dòng */
-  overflow: hidden; /* Ẩn nội dung tràn ra ngoài phần tử cha */
+  /* overflow: hidden; Ẩn nội dung tràn ra ngoài phần tử cha */
   text-overflow: ellipsis; /* Hiển thị dấu (...) khi nội dung tràn ra */
   
 }
@@ -157,6 +161,8 @@ h2{
   cursor: pointer;
   
 }
+
+
 
 /* .progress::-webkit-slider-runnable-track {
   -webkit-appearance: none;
@@ -216,7 +222,7 @@ h2{
 }
 .play-list::-webkit-scrollbar{
   width: 4px;
-  
+  height: 2px;
 }
 
 .play-list::-webkit-scrollbar-thumb{
@@ -265,7 +271,7 @@ h2{
   height: 44px;
   border-radius: 50%;
   background-size: cover;
-  margin: 0 8px;
+  margin: 0 10px;
 }
 
 .song .body {

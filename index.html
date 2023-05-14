@@ -7,6 +7,7 @@
     <title>Music player N</title>    
     <link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css">
     <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./phone.css">
     
 </head>
 <body>
@@ -27,18 +28,18 @@
             <div class="dashboard background">
                 <!-- tình trạng pháy -->
                 <div class="status-music flex">
-                    <!-- <div class="headphone">
+                    <div class="headphone displaynone">
                         <i class="fa-solid fa-headphones"></i>
-                    </div> -->
+                    </div>
 
                     <div class="text-status text-align">
                         <h4>Now playing:</h4>
                         <h2>String 57th & 9th</h2>
                     </div>
 
-                    <!-- <div class="heart">
+                    <div class="heart displaynone">
                         <i class="fa-solid fa-heart" style="font-weight: normal;"></i>
-                    </div> -->
+                    </div>
                 </div>
                 <!-- cd -->
                 <div class="cd-music">
@@ -73,11 +74,12 @@
 
                     <div class="change-volum">
                         <div class="icon-volum">
+                            
                             <i class="fa-volum fa-solid fa-volume-high"></i>
                         </div>
 
                         <div class="volum-input">
-                            <input type="range" min="0" max="100" step="1" class="volum-progress">
+                            <input type="range" min="0" max="100" step="1" class="volum-progress" value="100">
                         </div>
                     </div>
             </div>
