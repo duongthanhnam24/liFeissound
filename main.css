@@ -54,6 +54,39 @@ html{
   transition-duration: .7s;
 }
 
+.login{
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  right: 5%;
+  top: 2%;
+  position: fixed;
+  z-index: 9999;
+}
+
+.login button{
+  border-radius: 20px;
+  border: none;
+  height: 40px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login button:hover{
+  opacity: 0.7;
+}
+
+.btn-login{
+  background: #0674ec;
+  margin-left: 30px;
+}
+
+.btn-signup{
+  background-color: #7347c1;;
+}
+
 .bgsun{
 background-image: url(./img/4Z_2101.w020.n001.1017B.p15.1017.jpg);
 min-height: 100vh;
@@ -112,14 +145,34 @@ h1{
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  /* animation: modalFacein ease 0.9s; */
+  
+}
+
+.headphone,
+.heart{
+  display: block;
+  font-size: 15px;
+ margin-right: 15px;
+ cursor: pointer;
+ font-size: 25px;
+ color: #0d000f;
 }
 
 .status-music{
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  overflow: hidden;
   
+  
+}
+
+.text-status{
+  overflow: hidden  ;
+  text-overflow: ellipsis; /* Hiển thị dấu (...) khi nội dung tràn ra */
+  white-space: nowrap; /* Ngăn chặn đẩy xuống dòng */
+
+
 }
 
 h2{
@@ -210,15 +263,30 @@ h2{
   font-size: 35px;
 }
 
+.close-playlist {
+  display: none;
+  flex-direction: row-reverse;
+}
+.close{
+width: 50px;
+  cursor: pointer;
+  height: 25px; 
+  border-radius: 5px;
+  border: none ;
+}
+
 .play-list{
- 
+  max-height: 500px; 
   padding: 15px 20px;
   border-radius: 10px;
   margin-top: 10px;
   overflow: scroll;
-  
-  max-height: 300px;
+  display: none;
+  max-height: 500px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  animation: modalFaceout ease 0.9s;
+
+
 }
 .play-list::-webkit-scrollbar{
   width: 4px;
@@ -332,6 +400,116 @@ h2{
 }
 
 
+/*  form đăng ký */
+.form-signup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;   bottom: 0;
+z-index: 9999999999;
+display: none;
+
+}
+.main-signup {
+  background: rgba(0, 0, 0, 0.3);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.form {
+  width: 360px;
+  min-height: 100px;
+  padding: 32px 24px;
+  text-align: center;
+  background: #fff;
+  border-radius: 20px;
+  margin: 24px;
+  align-self: center;
+  box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+  cursor: initial;
+  animation: modalFacein ease 0.5s;
+
+}
+.form .heading {
+  font-size: 2rem;
+}
+.form .desc {
+  text-align: center;
+  color: #636d77;
+  font-size: 1.6rem;
+  font-weight: lighter;
+  line-height: 2.4rem;
+  margin-top: 16px;
+  font-weight: 300;
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 16px;
+  flex-direction: column;
+}
+
+.form-label,
+.form-message {
+  text-align: left;
+}
+
+.form-label {
+  font-weight: 700;
+  padding-bottom: 6px;
+  line-height: 1.8rem;
+  font-size: 1.4rem;
+}
+
+.form-control {
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  outline: none;
+  font-size: 1.4rem;
+}
+
+.form-control:hover {
+  border-color: #1dbfaf;
+}
+
+.form-group.invalid .form-control {
+  border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+  color: #f33a58;
+}
+
+.form-message {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  padding: 4px 0 0;
+}
+
+.form-submit {
+  outline: none;
+  background-color: #1dbfaf;
+  margin-top: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  background-color: #1ac7b6;
+}
+
+.spacer {
+  margin-top: 36px;
+}
+
 
 
 
@@ -341,3 +519,28 @@ h2{
 }
 }
 
+@keyframes modalFacein 
+    {
+        from {
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+
+        to{
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes modalFaceout
+    {
+        from {
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        to{
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    }

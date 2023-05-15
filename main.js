@@ -10,15 +10,12 @@
     * 9. Scroll active song into view
     * 10. Play song when click
  */
-
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
 const PLAYER_STORAGE_KEY = "NAM-PLAYER"
 
-
 const dashboard = $('.dashboard')
-
 const cd = $('.cd-music')
 const playlist = $('.play-list')
 const heading2 = $('h2')
@@ -27,22 +24,22 @@ const audio = $('#audio')
 const btnPlay = $('.btn-play')
 const iconPlay = $('.fas')
 const progress = $('#progress')
-
 const nextBtn = $('.btn-next')
 const backBtn = $('.btn-back')
 const btnRandom = $('.btn-random')
 const btnRepeat = $('.btn-repeat')
-
 const btnVolum = $('.fa-volum')
 const volumProgress = $('.volum-progress')
 const headphone = $('.headphone')
-
-
-
+const formSignUp = $('.form-signup')
+const btnSignUp = $('.btn-signup')
+const form = $('.form')
+// app chạy nhạc
 const app  = {
+    isClick : false,
     currentIndex : 0,
-    isPlaying: false,// có cũng được ko có cũng được
-    isRandom: false,// có cũng được ko cũng được
+    isPlaying: false,
+    isRandom: false,
     isRepeat: false,
     isVolum:false,
     config : JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
@@ -108,10 +105,16 @@ const app  = {
             image: './img/picture-song/OnlyC.jpg',
     
         },
+        {
+            name : 'Đủ trải sẽ thấm',
+            singer: 'Mikelodic',
+            path: './music/dutraisetham.mp3',
+            image: './img/picture-song/mikelodic.jpg',
+    
+        },
     ],
     render: function() {
         const htmls = this.songs.map((song, index)  => {
-           
             return ` 
             <div class="song ${index === app.currentIndex ? 'active' : ''}" data-index="${index}">
             <div class="pic-song" style="background-image: url(${song.image});"></div>
@@ -126,31 +129,25 @@ const app  = {
             </div>
         </div>`
         })
-
         playlist.innerHTML = htmls.join('')
     },
-
-
+    // thay đổi background
     changebg: function() {
         const btnSun = $('.btn-sun')
         const btnMoon = $('.btn-moon')
         const container = $('.container')
-
         btnSun.onclick = function() {
             $('.container.bgmoon').classList.remove('bgmoon')
              $('h1').style.color = "black"
             container.classList.add('bgsun')
         }
-
         btnMoon.onclick = function() {
             $('.container.bgsun').classList.remove('bgsun')
             $('h1').style.color = "#fff"
             container.classList.add('bgmoon')
-
-            
         }
     },
-
+    // lấy ra bài hát với index hiện tại
     defineProperties: function() {
         Object.defineProperty(this, 'currentSong', {
             get: function() {
@@ -158,15 +155,13 @@ const app  = {
             }
         }) 
     },
-
+    // xử lí các sự kiện
     handleEvents: function() {
        // xử lí cuộn kéo
         const cdWidth = cd.offsetWidth
             document.onscroll = function() {
                 console.log(123)
             }
-
-
             // cd quay 
                 const cdAnimation = cdThumb.animate([
                     {transform : 'rotate(360deg)'}
@@ -175,7 +170,6 @@ const app  = {
                     iterations: Infinity
                     })
                     cdAnimation.pause()
-                    
         // xử lí khi click play chạy nhạc
             btnPlay.onclick = function() {
                 // logic
@@ -187,7 +181,6 @@ const app  = {
                    
                 }            
             }
-
               // khi nhạc phát thực hiện chức năng thay đổi nút thành play
               audio.onplay = function() {
                 app.isPlaying = true
@@ -204,7 +197,6 @@ const app  = {
                 cdAnimation.pause()
 
             }
-
             // khi bài hát đang chạy 
             audio.ontimeupdate = function() {
                if(audio.duration) {
@@ -214,10 +206,6 @@ const app  = {
                 return durations
                }
             }
-            
-            
-            
-            
             // khi tua bài hát
             progress.onchange = function(e) {
                 const seekTime = audio.duration / 100 * e.target.value
@@ -225,7 +213,6 @@ const app  = {
                 console.log(seekTime)
                 
             }
-            
             // khi next bài hát
             nextBtn.onclick = function() {
                 if(app.isRandom) {
@@ -249,8 +236,6 @@ const app  = {
                 app.render()
                 app.scrolltoActive()
             }
-
-            
             // khi bài hát kết thúc
             audio.onended = function() {
                 if(app.isRandom) {
@@ -260,11 +245,10 @@ const app  = {
                 } else {
                     app.nextSong()
                 }
+                app.setConfig('currentIndex', app.currentIndex)
                 audio.play()
                 app.render()
             }
-
-
             // xử lý bật tắt random
             btnRandom.onclick = function() {
                 // if(app.isRandom == true){
@@ -281,7 +265,6 @@ const app  = {
                 this.classList.toggle('active', app.isRandom) //phương thức sẽ xóa `active`trả về giá trị `false`. Nếu chưa có sẽ thêm `active` trả về giá trị `true`.
            
             }
-
             // bắt tắt lặp bài hát
             btnRepeat.onclick = function() {
                 app.isRepeat = !app.isRepeat
@@ -291,7 +274,7 @@ const app  = {
                 
 
             }
-
+            // khi ấn vào playlist
             playlist.onclick = function(e) {
                 const songNode = e.target.closest('.song:not(.active)')
 
@@ -299,7 +282,8 @@ const app  = {
                     
                     // xử lí khi ấn vào song
                     if(songNode) {
-                         app.currentIndex = Number(songNode.dataset.index) 
+                         app.currentIndex = Number(songNode.dataset.index)
+                         app.setConfig('currentIndex', app.currentIndex)
                         app.loadCurrentSong()
                         app.render()
                         audio.play()
@@ -309,7 +293,6 @@ const app  = {
                     
                 }
             }
-
             // tăng giảm âm lượng
             volumProgress.onchange = function(e) {
               const audioVol =  e.target.value
@@ -317,7 +300,6 @@ const app  = {
              
 
             }
-
             // bật tắt volum 
             btnVolum.onclick = function() {
                 // app.isVolum = !app.isVolum
@@ -334,21 +316,41 @@ const app  = {
 
               }
             }
-
-
+            // bật ra thẻ playlist 
             headphone.onclick = function() {
-                playlist.style.display = 'block'
-                dashboard.style.display = 'none'
+              playlist.style.display = 'block'
+              dashboard.classList.add('dp')
+               $('.close-playlist').style.display = 'flex'
+            }
+            $('.close-playlist').onclick = function() {
+                playlist.style.display = 'none'
+                dashboard.classList.remove('dp')
+                dashboard.style.animation = 'modalFacein ease 0.9s'
+                $('.close-playlist').style.display = 'none'
+            }
+           
+           
+            // bật ra thẻ đăng ký khi ấn nút đăng ký
+            btnSignUp.onclick = function() {
+                formSignUp.style.display = "block"
+                formSignUp.style.cursor = 'pointer';
+            }
 
+            // khi ấn ra ngoài thì sẽ tắt form đăng ký 
+            formSignUp.onclick = function() {
+                
+                formSignUp.style.display = 'none'
+               form.addEventListener('click', function (even) {
+                even.stopPropagation()
+        })
             }
     },
     // load ra bài hát 
     loadCurrentSong: function() {
-    
-
-       heading2.textContent = this.currentSong.name
-       cdThumb.style.backgroundImage = `url(${this.currentSong.image})`
-      audio.src = this.currentSong.path
+        heading2.textContent = this.currentSong.name
+        cdThumb.style.backgroundImage = `url(${this.currentSong.image})`
+        audio.src = this.currentSong.path
+      
     },
     // logic next bài
     nextSong : function() {
@@ -357,7 +359,7 @@ const app  = {
         if(this.currentIndex >= this.songs.length) {
              this.currentIndex = 0;
         }
-
+        app.setConfig('currentIndex', app.currentIndex)
         this.loadCurrentSong()
     },
     // logic lùi bài
@@ -366,6 +368,7 @@ const app  = {
         if(this.currentIndex < 0) {
             this.currentIndex = this.songs.length -1;   
         }
+        app.setConfig('currentIndex', app.currentIndex)
         this.loadCurrentSong()
     },
     // logic random bài
@@ -376,9 +379,9 @@ const app  = {
                 newIndex = Math.floor(Math.random() * app.songs.length)
             } while(newIndex === this.currentIndex)
             this.currentIndex = newIndex
+            app.setConfig('currentIndex', app.currentIndex)
             this.loadCurrentSong()
     },
-
     //logic khi active thẻ bài hát view đưa theo
     scrolltoActive: function() {
             setTimeout(() => {
@@ -388,20 +391,20 @@ const app  = {
                 })
             } , 300)
     },
-
     // đổ dữ liệu trong strorage ra màn hình
     returnConfig: function() {
-            this.isRandom = this.config.isRandom
+            // trả ra màn hình giá trị của isRepeat và render lại 
             this.isRepeat = this.config.isRepeat
-
             btnRepeat.classList.toggle('active', app.isRepeat)
+            // trả ra màn hình giá trị của isRandom và render lại 
+            this.isRandom = this.config.isRandom
             btnRandom.classList.toggle('active', app.isRandom) 
-           
-
+           // trả ra màn hình giá trị index
+            this.currentIndex = this.config.currentIndex
+            this.newIndex = this.config.newIndex
+            this.scrolltoActive()
 
     },
-   
-
     start: function() {
         this.returnConfig()
 
@@ -416,18 +419,7 @@ const app  = {
         // tải thông tin bài hát đầu tiên vào UI 
         this.loadCurrentSong()
 
-        
-
         // đổ dữ liệu
         this.render()
-       
-
-
-
-    },
-
-    
-    
-}
-
+    },}
 app.start()
