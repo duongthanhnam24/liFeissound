@@ -313,7 +313,6 @@ const app  = {
                     app.isVolum = true
                     audio.volume = 0;
                     audioVol = 0;
-
               }
             }
             // bật ra thẻ playlist 
@@ -322,14 +321,13 @@ const app  = {
               dashboard.classList.add('dp')
                $('.close-playlist').style.display = 'flex'
             }
+            // đóng thẻ playlist
             $('.close-playlist').onclick = function() {
                 playlist.style.display = 'none'
                 dashboard.classList.remove('dp')
                 dashboard.style.animation = 'modalFacein ease 0.9s'
                 $('.close-playlist').style.display = 'none'
             }
-           
-           
             // bật ra thẻ đăng ký khi ấn nút đăng ký
             btnSignUp.onclick = function() {
                 formSignUp.style.display = "block"
@@ -338,7 +336,6 @@ const app  = {
 
             // khi ấn ra ngoài thì sẽ tắt form đăng ký 
             formSignUp.onclick = function() {
-                
                 formSignUp.style.display = 'none'
                form.addEventListener('click', function (even) {
                 even.stopPropagation()
@@ -350,7 +347,6 @@ const app  = {
         heading2.textContent = this.currentSong.name
         cdThumb.style.backgroundImage = `url(${this.currentSong.image})`
         audio.src = this.currentSong.path
-      
     },
     // logic next bài
     nextSong : function() {
@@ -374,7 +370,6 @@ const app  = {
     // logic random bài
     randomSong: function() {
             let newIndex 
-
             do {
                 newIndex = Math.floor(Math.random() * app.songs.length)
             } while(newIndex === this.currentIndex)
