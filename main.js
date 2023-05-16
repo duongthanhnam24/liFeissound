@@ -395,19 +395,15 @@ const app  = {
             this.isRandom = this.config.isRandom
             btnRandom.classList.toggle('active', app.isRandom) 
            // trả ra màn hình giá trị index
-            this.currentIndex = this.config.currentIndex
-            
-           this.setDefaul()
-            this.scrolltoActive()
-
+           
+            if(this.currentIndex) {
+                this.currentIndex = this.config.currentIndex
+            } else {
+                localStorage.setItem('currentIndex', app.currentIndex)
+            }
     },
 
-    setDefaul : function() {
-        let defatlValue = localStorage.getItem('currentIndex')
-        if(!defatlValue) {
-            localStorage.setItem('currentIndex', app.currentIndex)
-        }
-    },
+    
     start: function() {
        
 
