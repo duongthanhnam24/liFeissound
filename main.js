@@ -399,7 +399,7 @@ const app  = {
             if(this.currentIndex) {
                 this.currentIndex = this.config.currentIndex
             } else {
-                localStorage.setItem('currentIndex', app.currentIndex)
+                localStorage.setItem('currentIndex', app.currentIndex = 0)
             }
     },
 
