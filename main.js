@@ -37,11 +37,11 @@ const form = $('.form')
 // app chạy nhạc
 const app  = {
     isClick : false,
-    currentIndex : 0,
     isPlaying: false,
     isRandom: false,
     isRepeat: false,
     isVolum:false,
+    currentIndex : 0,
     config : JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
     setConfig: function(key, value) {
             this.config[key] = value
@@ -396,11 +396,21 @@ const app  = {
             btnRandom.classList.toggle('active', app.isRandom) 
            // trả ra màn hình giá trị index
             this.currentIndex = this.config.currentIndex
-            this.newIndex = this.config.newIndex
+            
+           this.setDefaul()
             this.scrolltoActive()
 
     },
+
+    setDefaul : function() {
+        let defatlValue = localStorage.getItem('currentIndex')
+        if(!defatlValue) {
+            localStorage.setItem('currentIndex', app.currentIndex)
+        }
+    },
     start: function() {
+       
+
         this.returnConfig()
 
         this.changebg()
