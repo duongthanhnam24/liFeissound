@@ -395,11 +395,11 @@ const app  = {
             this.isRandom = this.config.isRandom
             btnRandom.classList.toggle('active', app.isRandom) 
            // trả ra màn hình giá trị index
-           
-            if(this.currentIndex) {
-                this.currentIndex = this.config.currentIndex
+           let dfdata = JSON.parse(localStorage.getItem('currentIndex'))
+            if(!dfdata) {
+                this.setConfig('currentIndex', app.currentIndex)
             } else {
-                localStorage.setItem('currentIndex', app.currentIndex = 0)
+                this.currentIndex = this.config.currentIndex
             }
     },
 
