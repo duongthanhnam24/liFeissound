@@ -401,6 +401,8 @@ const app  = {
                 this.setConfig('currentIndex', app.currentIndex)
             } else {
                 this.currentIndex = this.config.currentIndex
+
+                
             }
     },
 
