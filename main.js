@@ -390,12 +390,13 @@ const app  = {
     returnConfig: function() {
             // trả ra màn hình giá trị của isRepeat và render lại 
             this.isRepeat = this.config.isRepeat
-            btnRepeat.classList.toggle('active', app.isRepeat)
+            
             // trả ra màn hình giá trị của isRandom và render lại 
             this.isRandom = this.config.isRandom
-            btnRandom.classList.toggle('active', app.isRandom) 
+            
            // trả ra màn hình giá trị index
-           let dfdata = JSON.parse(localStorage.getItem('currentIndex'))
+           
+           let dfdata = app.config
             if(!dfdata) {
                 this.setConfig('currentIndex', app.currentIndex)
             } else {
@@ -422,5 +423,9 @@ const app  = {
 
         // đổ dữ liệu
         this.render()
+
+
+        btnRepeat.classList.toggle('active', app.isRepeat)
+        btnRandom.classList.toggle('active', app.isRandom) 
     },}
 app.start()
