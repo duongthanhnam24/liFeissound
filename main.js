@@ -112,6 +112,13 @@ const app  = {
             image: './img/picture-song/mikelodic.jpg',
     
         },
+        {
+            name : 'Dynasty',
+            singer: 'MIIA',
+            path: './music/Dynasty.mp3',
+            image: './img/picture-song/miia.jpg',
+    
+        },
     ],
     render: function() {
         const htmls = this.songs.map((song, index)  => {

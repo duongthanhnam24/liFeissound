@@ -272,6 +272,12 @@ h2{
   display: none;
   flex-direction: row-reverse;
 }
+
+.close-playlist i {
+  font-size: 30px;
+  cursor: pointer;
+  color: crimson;
+}
 .close{
 width: 50px;
   cursor: pointer;
