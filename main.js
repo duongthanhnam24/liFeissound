@@ -390,20 +390,24 @@ const app  = {
     returnConfig: function() {
             // trả ra màn hình giá trị của isRepeat và render lại 
             this.isRepeat = this.config.isRepeat
-            
+            if(this.isRepeat) {
+                btnRepeat.classList.toggle('active', app.isRepeat)
+            } 
             // trả ra màn hình giá trị của isRandom và render lại 
             this.isRandom = this.config.isRandom
-            
-           // trả ra màn hình giá trị index
-           
-           let dfdata = app.config
-            if(!dfdata) {
-                this.setConfig('currentIndex', app.currentIndex)
-            } else {
-                this.currentIndex = this.config.currentIndex
-
-                
+            if(this.isRandom) {
+                btnRandom.classList.toggle('active', app.isRandom) 
             }
+           // trả ra màn hình giá trị index
+           this.currentIndex = this.config.currentIndex
+           const crId = 0
+           if(!this.currentIndex) {
+                this.setConfig('currentIndex', crId)
+           this.currentIndex = this.config.currentIndex
+
+           }
+           
+          
     },
 
     
@@ -427,7 +431,7 @@ const app  = {
         this.render()
 
 
-        btnRepeat.classList.toggle('active', app.isRepeat)
-        btnRandom.classList.toggle('active', app.isRandom) 
+        
+        
     },}
 app.start()
